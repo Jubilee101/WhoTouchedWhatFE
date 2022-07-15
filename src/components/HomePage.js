@@ -15,10 +15,8 @@ function ParseDirectory() {
 
     const getTree = async (query) => {
         setLoading(true);
-
         try {
             const resp = await parse(query);
-            console.log(resp.children);
             setData(oldData => [...resp.children]
             );
         } catch (error) {
