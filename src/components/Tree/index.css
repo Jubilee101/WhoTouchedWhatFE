@@ -10,3 +10,8 @@
   .d-tree-toggler.active {
     transform: rotate(45deg);
   }
+
+  .bar-plot-size {
+    width: 200px;
+    height: 8px;
+  }

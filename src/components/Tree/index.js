@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Bar } from '@ant-design/plots';
 import "./index.css"
 import { getHistory } from "../../utils";
 import {
@@ -40,8 +41,16 @@ const TreeNode = ({node}) => {
                 <div className='col d-tree-head'>
                     {node.title}
                     <span>
-                    <CommitterDetailInfoButton filePath={node.file_path} repoPath={node.repo_address} setData={setData} setBarVisibility={setBarVisibility}/>
+                    <CommitterDetailInfoButton filePath={node.file_path} repoPath={node.repo_address} setData={setData} setBarVisibility={setBarVisibility} padding={0}/>
                     </span>
+                    
+                    {
+                        barVisibility && 
+                        <div class="bar-plot-size">
+                        <BarPlot data={data} />
+                        </div>
+                    }
+                    
                 </div>
             </div>
             {
@@ -57,22 +66,21 @@ const TreeNode = ({node}) => {
 
 const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibility}) => {
     const [loading, setLoading] = useState(false);
-    console.log(filePath)
-    console.log(repoPath)
     const fetchInfo = async (filePath, repoPath) => {
         setLoading(true);
         try {
             const resp = await getHistory(filePath, repoPath);
             setData(oldData => [...resp])
+            
         } catch (error) {
             message.error(error.message);
         } finally {
             setLoading(false);
         }
     }
-    const onClick = () => {
-        fetchInfo(filePath, repoPath);
-        setBarVisibility(true);
+    const onClick = async() => {
+        await fetchInfo(filePath, repoPath);
+        setBarVisibility(v =>!v);
     }
 
     return (
@@ -93,7 +101,26 @@ const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibilit
 }
 
 const BarPlot = ({data}) => {
-    
+    const visible = data.length === 0 ? false : true;
+    const config = {
+        data,
+        xField: 'commit_count',
+        yField: 'y_axis',
+        seriesField: 'author_name',
+        isPercent: true,
+        isStack: true,
+        autoFit: true,
+        label: {
+            position: 'middle',
+            content: (item) => {
+              return "";
+            },
+            style: {
+              fill: '#fff',
+            },
+          },
+      };
+      return <>{ visible && <Bar {...config} />}</>;
 }
 
 export default Tree;
