@@ -18,8 +18,9 @@ function ParseDirectory() {
 
         try {
             const resp = await parse(query);
-            console.log(data);
-            setData(resp.children);
+            console.log(resp.children);
+            setData(oldData => [...resp.children]
+            );
         } catch (error) {
             message.error(error.message);
         } finally {

@@ -39,7 +39,6 @@ const TreeNode = ({node}) => {
                 </div>
             }
         </li>
-
     )
 }
 
