@@ -48,14 +48,12 @@ const TreeNode = ({node}) => {
                     <span>
                     <CommitterDetailInfoButton filePath={node.file_path} repoPath={node.repo_address} setData={setData} setBarVisibility={setBarVisibility} padding={0}/>
                     </span>
-                    
                     {
-                        barVisibility && 
-                        <div class="bar-plot-size">
-                        <BarPlot data={data} />
-                        </div>
+                    barVisibility && 
+                    <div className="flex-column bar-plot-size">
+                    <BarPlot data={data} />
+                    </div>
                     }
-                    
                 </div>
             </div>
             {

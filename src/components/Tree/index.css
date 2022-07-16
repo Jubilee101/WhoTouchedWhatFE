@@ -12,6 +12,7 @@
   }
 
   .bar-plot-size {
-    width: 200px;
+    width: 400px;
     height: 8px;
+    line-height: 8px;
   }
