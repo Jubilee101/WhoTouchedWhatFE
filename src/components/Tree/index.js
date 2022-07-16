@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Bar } from '@ant-design/plots';
 import "./index.css"
@@ -11,7 +11,7 @@ import {
  import {
     InfoCircleOutlined,
   } from "@ant-design/icons";
-import { faL } from '@fortawesome/free-solid-svg-icons';
+
 
 const Tree = ({data = []}) => {
     return (
@@ -27,14 +27,19 @@ const Tree = ({data = []}) => {
 
 const TreeNode = ({node}) => {
     const [childVisibility, setChildVisibility] = useState(false);
-    const [data, setData] = useState(false);
+    const [data, setData] = useState([]);
     const [barVisibility, setBarVisibility] = useState(false);
     const hasChild = node.children.length !== 0 ? true : false;
+    useEffect(() => { 
+        return function cleanup () {
+          setBarVisibility(false);
+        }
+     }, [node.children])
     return(
         <li className="d-tree-node border-0">
-            <div className='d-flex' onClick={e => setChildVisibility(v => !v)}>
+            <div className='d-flex'>
                 {hasChild && (
-                    <div className={`d-inline d-tree-toggler ${ childVisibility ? "active" : "" }`} >
+                    <div className={`d-inline d-tree-toggler ${ childVisibility ? "active" : "" }`}  onClick={e => setChildVisibility(v => !v)}>
                         <FontAwesomeIcon icon="fa-solid fa-caret-right" />
                     </div>
                 )}
@@ -80,19 +85,20 @@ const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibilit
     }
     const onClick = async() => {
         await fetchInfo(filePath, repoPath);
-        setBarVisibility(v =>!v);
+        setBarVisibility(v =>!v); 
     }
 
     return (
         <>
-            <Tooltip title="View Committer Details">
+            <Tooltip title="view details">
               <Button
+                ghost
                 onClick={onClick}
                 loading={loading}
                 style={{ border: "none" }}
                 shape="circle"
                 size="small"
-                icon={<InfoCircleOutlined />}
+                icon={<InfoCircleOutlined style={{ fontSize: '13px', color: '#08c' }}/>}
               />
             </Tooltip>
             
@@ -101,7 +107,7 @@ const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibilit
 }
 
 const BarPlot = ({data}) => {
-    const visible = data.length === 0 ? false : true;
+
     const config = {
         data,
         xField: 'commit_count',
@@ -120,7 +126,8 @@ const BarPlot = ({data}) => {
             },
           },
       };
-      return <>{ visible && <Bar {...config} />}</>;
+
+      return <Bar {...config} />;
 }
 
 export default Tree;
