@@ -9,7 +9,8 @@ import {
     Tooltip,
  } from "antd";
  import {
-    InfoCircleOutlined,
+    EyeOutlined,
+    EyeInvisibleOutlined,
   } from "@ant-design/icons";
 
 
@@ -27,31 +28,32 @@ const Tree = ({data = []}) => {
 
 const TreeNode = ({node}) => {
     const [childVisibility, setChildVisibility] = useState(false);
-    const [data, setData] = useState([]);
-    const [barVisibility, setBarVisibility] = useState(false);
+    const [barVisibility, setBarVisibility] = useState(true);
     const hasChild = node.children.length !== 0 ? true : false;
-    useEffect(() => { 
-        return function cleanup () {
-          setBarVisibility(false);
-        }
-     }, [node.children])
+    // useEffect(() => { 
+    //     return function cleanup () {
+    //       setBarVisibility(false);
+    //     }
+    //  }, [node.children])
     return(
         <li className="d-tree-node border-0">
-            <div className='d-flex'>
+            <div className='d-flex'onClick={e => {
+                        setChildVisibility(v => !v);
+                    }}>
                 {hasChild && (
-                    <div className={`d-inline d-tree-toggler ${ childVisibility ? "active" : "" }`}  onClick={e => setChildVisibility(v => !v)}>
+                    <div className={`d-inline d-tree-toggler ${ childVisibility ? "active" : "" }`} >
                         <FontAwesomeIcon icon="fa-solid fa-caret-right" />
                     </div>
                 )}
                 <div className='col d-tree-head'>
                     {node.title}
                     <span>
-                    <CommitterDetailInfoButton filePath={node.file_path} repoPath={node.repo_address} setData={setData} setBarVisibility={setBarVisibility} padding={0}/>
+                    <CommitterDetailInfoButton barVisibility = {barVisibility} setBarVisibility={setBarVisibility} padding={0}/>
                     </span>
                     {
-                    barVisibility && 
+                    barVisibility &&
                     <div className="flex-column bar-plot-size">
-                    <BarPlot data={data} />
+                    <BarPlot data={node.authors} />
                     </div>
                     }
                 </div>
@@ -67,22 +69,9 @@ const TreeNode = ({node}) => {
     )
 }
 
-const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibility}) => {
-    const [loading, setLoading] = useState(false);
-    const fetchInfo = async (filePath, repoPath) => {
-        setLoading(true);
-        try {
-            const resp = await getHistory(filePath, repoPath);
-            setData(oldData => [...resp])
-            
-        } catch (error) {
-            message.error(error.message);
-        } finally {
-            setLoading(false);
-        }
-    }
-    const onClick = async() => {
-        await fetchInfo(filePath, repoPath);
+const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
+    const onClick = (e) => {
+        e.stopPropagation()
         setBarVisibility(v =>!v); 
     }
 
@@ -92,20 +81,20 @@ const CommitterDetailInfoButton = ({filePath, repoPath, setData, setBarVisibilit
               <Button
                 ghost
                 onClick={onClick}
-                loading={loading}
                 style={{ border: "none" }}
                 shape="circle"
                 size="small"
-                icon={<InfoCircleOutlined style={{ fontSize: '13px', color: '#08c' }}/>}
+                icon={barVisibility ? <EyeOutlined style={{ fontSize: '13px', color: '#08c' }}/> : <EyeInvisibleOutlined style={{ fontSize: '13px', color: '#08c' }}/>}
               />
             </Tooltip>
-            
         </>
     )
 }
 
 const BarPlot = ({data}) => {
-
+    if (data.length === 1 && data[0].commit_count === 0) {
+        return <></>
+    }
     const config = {
         data,
         xField: 'commit_count',
