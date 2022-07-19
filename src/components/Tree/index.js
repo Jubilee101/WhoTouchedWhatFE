@@ -95,6 +95,13 @@ const BarPlot = ({data}) => {
     if (data.length === 1 && data[0].commit_count === 0) {
         return <></>
     }
+    const getColor = (author_name) => {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].author_name === author_name) {
+                return data[i].color;
+            }
+        }
+    }
     const config = {
         data,
         xField: 'commit_count',
@@ -103,6 +110,9 @@ const BarPlot = ({data}) => {
         isPercent: true,
         isStack: true,
         autoFit: true,
+        color: ( {author_name} ) => {
+           return getColor(author_name);
+        },
         label: {
             position: 'middle',
             content: (item) => {

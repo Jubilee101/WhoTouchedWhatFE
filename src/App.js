@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
-import HomePage from './components/HomePage'
+import HomePage from './components/HomePage/HomePage.js'
 import "./components/FontawsomeIcons";
 
 const { Header, Content } = Layout;
