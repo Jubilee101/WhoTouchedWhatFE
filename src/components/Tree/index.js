@@ -92,15 +92,6 @@ const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
 }
 
 const BarPlot = ({data}) => {
-    let allZero = true;
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].commit_count !== 0) {
-            allZero = false;
-        }
-    }
-    if (allZero) {
-        return <></>
-    }
     const getColor = (author_name) => {
         for (let i = 0; i < data.length; i++) {
             if (data[i].author_name === author_name) {
