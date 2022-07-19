@@ -77,16 +77,14 @@ const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
 
     return (
         <>
-            <Tooltip title="hide?">
-              <Button
-                ghost
-                onClick={onClick}
-                style={{ border: "none" }}
-                shape="circle"
-                size="small"
-                icon={barVisibility ? <EyeOutlined style={{ fontSize: '13px', color: '#08c' }}/> : <EyeInvisibleOutlined style={{ fontSize: '13px', color: '#08c' }}/>}
-              />
-            </Tooltip>
+            <Button
+            ghost
+            onClick={onClick}
+            style={{ border: "none" }}
+            shape="circle"
+            size="small"
+            icon={barVisibility ? <EyeOutlined style={{ fontSize: '13px', color: '#08c' }}/> : <EyeInvisibleOutlined style={{ fontSize: '13px', color: '#08c' }}/>}
+            />
         </>
     )
 }
