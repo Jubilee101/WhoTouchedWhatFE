@@ -35,7 +35,7 @@ function ParseDirectory() {
     return (
         <>
         <Row>
-            <Col span={12} className='left-side'>
+            <Col span={10} className='left-side'>
                 <Form onFinish={getTree} layout="verticle">
                     <Form.Item
                         label="Repository Directory"
@@ -61,7 +61,7 @@ function ParseDirectory() {
                 </Form>
                 <Tree data={data} />
         </Col>
-        <Col span={12} className="right-side">
+        <Col span={14} className="right-side">
             {pieVisibility && <PieChart data = {authors}/>}
         </Col>
         </Row>
