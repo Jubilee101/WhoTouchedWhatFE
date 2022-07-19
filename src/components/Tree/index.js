@@ -30,18 +30,6 @@ const TreeNode = ({node}) => {
     const [childVisibility, setChildVisibility] = useState(false);
     const [barVisibility, setBarVisibility] = useState(true);
     const hasChild = node.children.length !== 0 ? true : false;
-    if (!hasChild) {
-        let allZero = true;
-        for (let i = 0; i < node.authors.length; i++) {
-            if (node.authors[i].commit_count !== 0) {
-                allZero = false;
-                break;
-            }
-        }
-        if (allZero) {
-            return <></>
-        }
-    }
     // useEffect(() => { 
     //     return function cleanup () {
     //       setBarVisibility(false);
@@ -104,6 +92,15 @@ const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
 }
 
 const BarPlot = ({data}) => {
+    let allZero = true;
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].commit_count !== 0) {
+            allZero = false;
+        }
+    }
+    if (allZero) {
+        return <></>
+    }
     const getColor = (author_name) => {
         for (let i = 0; i < data.length; i++) {
             if (data[i].author_name === author_name) {
