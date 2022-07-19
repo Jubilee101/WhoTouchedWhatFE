@@ -30,11 +30,11 @@ const TreeNode = ({node}) => {
     const [childVisibility, setChildVisibility] = useState(false);
     const [barVisibility, setBarVisibility] = useState(true);
     const hasChild = node.children.length !== 0 ? true : false;
-    // useEffect(() => { 
-    //     return function cleanup () {
-    //       setBarVisibility(false);
-    //     }
-    //  }, [node.children])
+    useEffect(() => { 
+        return function cleanup () {
+          setBarVisibility(true);
+        }
+     }, [node.children])
     return(
         <li className="d-tree-node border-0">
             <div className='d-flex'onClick={e => {
