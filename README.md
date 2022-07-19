@@ -8,4 +8,4 @@ This a git analysis tool for you to see how many edits were done to each file an
 This part is the front-end implementation of Who Touched What?. 
 <br />
 
-See front-end at [WhoTouchedWhat](https://github.com/Jubilee101/WhoTouchedWhat)
+See back-end at [WhoTouchedWhat](https://github.com/Jubilee101/WhoTouchedWhat)
