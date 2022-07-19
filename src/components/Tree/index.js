@@ -77,7 +77,7 @@ const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
 
     return (
         <>
-            <Tooltip title="view details">
+            <Tooltip title="hide?">
               <Button
                 ghost
                 onClick={onClick}
