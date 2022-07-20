@@ -59,7 +59,7 @@ function ParseDirectory() {
                 </Button>
                 </Form.Item>
                 </Form>
-                <Tree data={data} />
+                <Tree data={data} authors={authors}/>
         </Col>
         <Col span={13} className="right-side">
             {pieVisibility && <PieChart data = {authors}/>}

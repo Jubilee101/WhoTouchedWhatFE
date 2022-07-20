@@ -14,19 +14,19 @@ import {
   } from "@ant-design/icons";
 
 
-const Tree = ({data = []}) => {
+const Tree = ({data = [], authors}) => {
     return (
         <div className='d-tree'>
             <ul className='d-flex d-tree-container flex-column'>
                 {data.map(tree => (
-                    <TreeNode node={tree} />
+                    <TreeNode node={tree} authors={authors}/>
                 ))}
             </ul>
         </div>
     )
 }
 
-const TreeNode = ({node}) => {
+const TreeNode = ({node, authors}) => {
     const [childVisibility, setChildVisibility] = useState(false);
     const [barVisibility, setBarVisibility] = useState(true);
     const hasChild = node.children.length !== 0 ? true : false;
@@ -53,7 +53,7 @@ const TreeNode = ({node}) => {
                     {
                     barVisibility &&
                     <div className="flex-column bar-plot-size">
-                    <BarPlot data={node.authors} />
+                    <BarPlot data={node.authors} authors={authors}/>
                     </div>
                     }
                 </div>
@@ -61,7 +61,7 @@ const TreeNode = ({node}) => {
             {
                 hasChild && childVisibility && <div className = "d-tree-content">
                     <ul className='d-flex d-tree-container flex-column'>
-                        <Tree data={node.children}/>
+                        <Tree data={node.children} authors={authors}/>
                     </ul>
                 </div>
             }
@@ -89,11 +89,11 @@ const CommitterDetailInfoButton = ({barVisibility, setBarVisibility}) => {
     )
 }
 
-const BarPlot = ({data}) => {
+const BarPlot = ({data, authors}) => {
     const getColor = (author_name) => {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].author_name === author_name) {
-                return data[i].color;
+        for (let i = 0; i < authors.length; i++) {
+            if (authors[i].author_name === author_name) {
+                return authors[i].color;
             }
         }
     }
