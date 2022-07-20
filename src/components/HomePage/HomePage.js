@@ -4,6 +4,7 @@ import { Form, Button, Input, Row, Col } from "antd";
 import { parse } from "../../utils";
 import Tree from "../Tree"
 import PieChart from "../PieChart";
+import Please from "pleasejs"
 import "./HomePage.css"
 
 class HomePage extends React.Component {
@@ -17,13 +18,20 @@ function ParseDirectory() {
     const [data, setData] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [pieVisibility, setPieVisibility] = useState(false);
-
     const getTree = async (query) => {
         setLoading(true);
         try {
             const resp = await parse(query);
+            const colorOptions = {
+                saturation: 1,
+                colors_returned: resp.authors.length,
+            }
+            let authors = [...resp.authors];
+            for (let i = 0; i < authors.length; i++) {
+                authors[i].color = Please.make_color({colorOptions})[0];
+            }
             setData(oldData => [...resp.children]);
-            setAuthors(oldAuthors =>[...resp.authors])
+            setAuthors(oldAuthors => authors)
             setPieVisibility(true);
             
         } catch (error) {
