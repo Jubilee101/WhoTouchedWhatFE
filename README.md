@@ -8,6 +8,10 @@ This a git analysis tool for you to see how many edits were done to each file an
 ![Home page](https://github.com/Jubilee101/WhoTouchedWhat/blob/main/img/demo.png)
 <br />
 
+![Show case](https://github.com/Jubilee101/WhoTouchedWhat/blob/main/img/demo.gif)
+
+<br />
+
 #### Features:
 
 1. Interactive and demonstrative stack bar plot showing you line changes corresponding to each author under each directory
