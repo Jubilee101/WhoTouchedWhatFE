@@ -8,7 +8,10 @@
 
 .right-side {
     height: 500px;
+    position: sticky;
+    top: 0;
 }
+
 @media screen and (max-width: 1000px){
 .right-side{display: none;}
 }

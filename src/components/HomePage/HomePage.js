@@ -70,7 +70,7 @@ function ParseDirectory() {
                 <Tree data={data} authors={authors}/>
         </Col>
         <Col span={13} className="right-side">
-            {pieVisibility && <PieChart data = {authors}/>}
+            {pieVisibility && <PieChart data = {authors} className="pie"/>}
         </Col>
         </Row>
         </>
