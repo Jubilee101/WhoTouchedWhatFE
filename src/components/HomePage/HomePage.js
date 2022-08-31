@@ -1,6 +1,6 @@
 import { message } from "antd";
 import React, { useState } from "react";
-import { Form, Button, Input, Row, Col } from "antd";
+import { Form, Button, Input, Row, Col} from "antd";
 import DependencyMap from "../DependencyMap/DependencyMap";
 import { parse } from "../../utils";
 import Tree from "../Tree"
@@ -13,7 +13,6 @@ class HomePage extends React.Component {
         return <ParseDirectory/>
     }
 }
-
 function ParseDirectory() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -77,7 +76,7 @@ function ParseDirectory() {
         </Col>
         </Row>
         <Row>
-            <Col span={24}>
+            <Col span={20}>
                 <DependencyMap dependencies={dependencies}/>
             </Col>
         </Row>
