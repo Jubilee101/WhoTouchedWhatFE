@@ -1,6 +1,7 @@
 import { message } from "antd";
 import React, { useState } from "react";
 import { Form, Button, Input, Row, Col } from "antd";
+import DependencyMap from "../DependencyMap/DependencyMap";
 import { parse } from "../../utils";
 import Tree from "../Tree"
 import PieChart from "../PieChart";
@@ -16,6 +17,7 @@ class HomePage extends React.Component {
 function ParseDirectory() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [dependencies, setDependencies] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [pieVisibility, setPieVisibility] = useState(false);
     const getTree = async (query) => {
@@ -30,6 +32,7 @@ function ParseDirectory() {
             for (let i = 0; i < authors.length; i++) {
                 authors[i].color = Please.make_color({colorOptions})[0];
             }
+            setDependencies(oldData => [...resp.dependencies]);
             setData(oldData => [...resp.children]);
             setAuthors(oldAuthors => authors)
             setPieVisibility(true);
@@ -72,6 +75,11 @@ function ParseDirectory() {
         <Col span={13} className="right-side">
             {pieVisibility && <PieChart data = {authors} className="pie"/>}
         </Col>
+        </Row>
+        <Row>
+            <Col span={24}>
+                <DependencyMap dependencies={dependencies}/>
+            </Col>
         </Row>
         </>
     )
